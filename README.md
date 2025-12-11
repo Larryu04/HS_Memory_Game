@@ -1,10 +1,16 @@
 # 🃏 Hearthstone Memory & Guessing Game
 
-This project is a Hearthstone-themed memory and card-guessing game that uses real card data from Blizzard's Hearthstone API via RapidAPI.  
+This project is a Hearthstone-themed memory and card-guessing game.  
+Unlike standard API-based apps, this project generates a local dataset of Hearthstone cards (sourced from
+HearthstoneJSON) to ensure fast loading times and zero API rate-limit issues.
+
 It features:
+
 - A Flask web interface where players guess card names.
-- Animated flip card UI with rarity filtering and set grouping.
-- A desktop Tkinter version for offline play.
+- **Smart Animations:** The game smooth-scrolls to the card, waits, and then performs a dramatic flip reveal.
+- **Current Standard Rotation:** Includes sets like *The Great Dark Beyond*, *Perils in Paradise*, *Whizbang's
+  Workshop*, and more.
+- **Rarity Filtering:** Filter the board by Common, Rare, Epic, or Legendary.
 
 ---
 
@@ -12,13 +18,12 @@ It features:
 
 ### 1. Clone the project
 
-Make sure all files are in the same folder, including:
-- `flask_app.py`
-- `main.py` (Tkinter game)
-- `memory_ui.py` (alternative memory view)
-- `trie.py`
+Ensure you have the following file structure:
+
+- `flask_app.py` (The main game server)
+- `setup_cards.py` (The data downloader)
 - `requirements.txt`
-- `static/└── card_back.png`
+- `static/` folder containing `card_back.png`
 
 ### 2. Install dependencies
 
@@ -26,7 +31,18 @@ Make sure all files are in the same folder, including:
 pip install -r requirements.txt
 ```
 
-### 3. Run the Flask app
+### 3.⚠️ IMPORTANT: Setup Card Data
+
+Before running the game for the first time, you must download the card data. This script fetches the latest cards and
+saves them to a local cards_data.json file (which is ignored by git to keep the repo light).
+
+```bash
+python setup_cards.py
+```
+
+Wait for the green success message confirming cards were saved.
+
+### 4. Run the Flask app
 
 ```bash
 python flask_app.py
@@ -66,7 +82,7 @@ These are automatically installed via the `requirements.txt`.
 
 - 🔁 Flip animation on correct guess
 - 🔎 Guess by name (with Enter key or button)
-- 📚 Filter by rarity: Common, Rare, Epic, Legendary, All
+- 📚 Filter by rarity: Common, Rare, Epic, Legendary
 - 🪄 Scrolls and animates automatically to reveal found card
 - 📦 Full support for Standard sets (e.g. Core, Whizbang’s Workshop)
 
